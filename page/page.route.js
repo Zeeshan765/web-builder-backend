@@ -7,10 +7,12 @@ import {
   details,
   list,
   loadContent,
+  copiedPagecreate,
 } from './page.controller';
 
 const pageRoute = express.Router();
 pageRoute.post('/', create);
+pageRoute.post('/copied-page', copiedPagecreate);
 pageRoute.post('/:pageId/content', changeContent);
 
 pageRoute.put('/:pageId', update);

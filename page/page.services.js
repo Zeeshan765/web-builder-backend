@@ -7,12 +7,36 @@ export const createPage = async (pageBody) => {
   const pageResponse = await page.save();
   return pageResponse;
 };
+
+export const createCopiedPage = async (pageBody, req, res) => {
+
+  const findPage = await Pages.findById({
+    _id: pageBody._id
+  })
+
+  const PageName = await Pages.findOne({
+    name: pageBody.name
+  })
+
+  if (PageName) {
+    return res.json("Name already Exsist")
+  }
+
+  const slug = pageBody.name.toLowerCase().split(' ').join('-');
+  pageBody.slug = slug;
+  const page = new Pages();
+  page.name = pageBody.name;
+  page.slug = slug;
+  page.content = findPage.content
+  const pageResponse = await page.save();
+  return pageResponse;
+};
 export const listPages = async () => {
   const pages = await Pages.find({});
   return pages;
 };
-export const deletePage = async (pageId) => {};
-export const updatePage = async (pageId, pageBody) => {};
+export const deletePage = async (pageId) => { };
+export const updatePage = async (pageId, pageBody) => { };
 export const pageDetails = async (pageId) => {
   const pages = await Pages.findOne({ _id: pageId });
   return pages;

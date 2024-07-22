@@ -5,11 +5,19 @@ import {
   pageDetails,
   savePageContent,
   updatePage,
+  createCopiedPage
 } from './page.services';
 
 export const create = async (req, res) => {
   const pageBody = req.body;
-  const page = await createPage(pageBody);
+  const page = await createPage(pageBody,res);
+  res.json(page);
+};
+
+export const copiedPagecreate = async (req, res) => {
+  const pageBody = req.body;
+  console.log('req.body', req.body)
+  const page = await createCopiedPage(pageBody,req,res);
   res.json(page);
 };
 export const list = async (req, res) => {
